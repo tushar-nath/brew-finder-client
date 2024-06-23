@@ -1,7 +1,7 @@
 import React from "react";
 import ProfilePicture from "../assets/pfp.jpeg";
 
-const Header: React.FC = () => {
+export const Header: React.FC = () => {
   return (
     <header className="flex justify-between items-center mb-6">
       <h1 className="text-2xl font-bold text-teal-800">
@@ -13,5 +13,3 @@ const Header: React.FC = () => {
     </header>
   );
 };
-
-export default Header;

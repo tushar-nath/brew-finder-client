@@ -1,5 +1,24 @@
 import React, { useEffect, useState } from "react";
 import { fetchCoffeeShops, CoffeeShop } from "../api";
+import img1 from "../assets/blake-verdoorn-gM-RfQsZK98-unsplash.jpg";
+import img2 from "../assets/kris-atomic-3b2tADGAWnU-unsplash.jpg";
+import img3 from "../assets/nafinia-putra-Kwdp-0pok-I-unsplash.jpg";
+import img4 from "../assets/patrick-tomasso-GXXYkSwndP4-unsplash.jpg";
+import img5 from "../assets/petr-sevcovic-qE1jxYXiwOA-unsplash.jpg";
+import img6 from "../assets/ruben-ramirez-xhKG01FN2uk-unsplash.jpg";
+import img7 from "../assets/sincerely-media-VNsdEl1gORk-unsplash.jpg";
+import img8 from "../assets/matiinu-ramadhan-i3vmGDN_Fzg-unsplash.jpg";
+
+const images = [img1, img2, img3, img4, img5, img6, img7, img8];
+
+const shuffleArray = (array: string[]) => {
+  const shuffled = [...array];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
+};
 
 interface CoffeeShopPageProps {
   shopId: string;
@@ -13,6 +32,11 @@ export const CoffeeShopPage: React.FC<CoffeeShopPageProps> = ({
   const [shop, setShop] = useState<CoffeeShop | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [shuffledImages, setShuffledImages] = useState<string[]>([]);
+
+  useEffect(() => {
+    setShuffledImages(shuffleArray(images));
+  }, []);
 
   useEffect(() => {
     fetchCoffeeShops()
@@ -35,12 +59,15 @@ export const CoffeeShopPage: React.FC<CoffeeShopPageProps> = ({
   if (error) return <div>{error}</div>;
   if (!shop) return <div>Shop not found</div>;
 
+  const imageIndex = shopId.charCodeAt(0) % shuffledImages.length;
+  const shopImage = shuffledImages[imageIndex];
+
   return (
     <div className="relative">
       <img
-        src={`https://source.unsplash.com/1600x900/?coffee,shop&${shop._id}`}
+        src={shopImage}
         alt={shop.name}
-        className="w-full h-48 object-cover"
+        className="w-full h-80 object-cover"
       />
       <button
         onClick={onBack}

@@ -3,7 +3,7 @@ import { fetchCoffeeShops, CoffeeShop } from "../api";
 import SearchBar from "./SearchBar";
 import BottomNavigation from "./BottomNavigation";
 import { FeaturedCoffeeShops } from "./FeaturedCoffeeShops";
-import Header from "./Header";
+import { Header } from "./Header";
 
 interface HomePageProps {
   onSelectShop: (shopId: string) => void;
