@@ -3,7 +3,7 @@ import ProfilePicture from "../assets/pfp.jpeg";
 
 export const Header: React.FC = () => {
   return (
-    <header className="flex justify-between items-center mb-6">
+    <header className="flex justify-between items-center mb-6 pt-8">
       <h1 className="text-2xl font-bold text-teal-800">
         Find a coffee shop anywhere
       </h1>

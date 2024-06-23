@@ -1,5 +1,6 @@
 import React from "react";
 import { CoffeeShop } from "../api";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 
 interface FeaturedCoffeeShopsProps {
   coffeeShops: CoffeeShop[];
@@ -24,7 +25,7 @@ export const FeaturedCoffeeShops: React.FC<FeaturedCoffeeShopsProps> = ({
               onSelectShop(shop._id, images[index % images.length])
             }
           >
-            <img
+            <LazyLoadImage
               src={images[index % images.length]}
               alt={shop.name}
               className="w-full h-96 object-cover"

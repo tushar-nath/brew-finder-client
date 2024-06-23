@@ -3,6 +3,7 @@ import { fetchCoffeeShop, CoffeeShop } from "../api";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import BeatLoader from "react-spinners/BeatLoader";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 
 //drink images
 import drinkImg1 from "../assets/frappe.jpeg";
@@ -117,7 +118,7 @@ export const CoffeeShopPage: React.FC = () => {
       exit={{ opacity: 0 }}
     >
       <div className="relative">
-        <img
+        <LazyLoadImage
           src={selectedImage}
           alt={shop.name}
           className="w-full h-80 object-cover"
@@ -180,7 +181,7 @@ export const CoffeeShopPage: React.FC = () => {
                 key={product._id}
                 className="flex bg-gray-100 rounded-lg p-4 shadow-md"
               >
-                <img
+                <LazyLoadImage
                   src={filteredImages[index]}
                   alt={product.name}
                   className="w-16 h-16 object-cover rounded-lg"
