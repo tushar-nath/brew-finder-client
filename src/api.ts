@@ -19,7 +19,9 @@ export interface CoffeeShop {
 }
 
 export async function fetchCoffeeShops(): Promise<CoffeeShop[]> {
-  const response = await fetch("http://localhost:8000/api/coffee-shops");
+  const response = await fetch(
+    `${import.meta.env.VITE_NODE_BASE_URL}/api/coffee-shops`
+  );
   if (!response.ok) {
     throw new Error("Failed to fetch coffee shops");
   }
@@ -28,7 +30,7 @@ export async function fetchCoffeeShops(): Promise<CoffeeShop[]> {
 
 export async function fetchCoffeeShop(shopId: string): Promise<CoffeeShop> {
   const response = await fetch(
-    `http://localhost:8000/api/coffee-shops/${shopId}`
+    `${import.meta.env.VITE_NODE_BASE_URL}/api/coffee-shops/${shopId}`
   );
   if (!response.ok) {
     throw new Error("Failed to fetch coffee shop");
