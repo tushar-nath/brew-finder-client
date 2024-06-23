@@ -41,7 +41,6 @@ export const CoffeeShopPage: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { selectedImage } = location.state || {};
-
   const [shop, setShop] = useState<CoffeeShop | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -166,20 +165,20 @@ export const CoffeeShopPage: React.FC = () => {
           {filteredProducts.map((product, index) => (
             <div
               key={product._id}
-              className="bg-white rounded-lg shadow-md p-4 flex flex-col items-center"
+              className="flex bg-gray-100 rounded-lg p-4 shadow-md"
             >
               <img
                 src={filteredImages[index]}
                 alt={product.name}
-                className="w-20 h-20 object-cover rounded-full mb-2"
+                className="w-16 h-16 object-cover rounded-lg"
               />
-              <h3 className="font-semibold text-center">{product.name}</h3>
-              <p className="text-gray-600 text-sm text-center mb-2">
-                {randomDescription()}
-              </p>
-              <span className="font-semibold text-center text-lg mb-2">
-                ${(product.price / 100).toFixed(2)}
-              </span>
+              <div className="ml-4 flex-1">
+                <h3 className="font-semibold">{product.name}</h3>
+                <p className="text-gray-600 text-sm">{randomDescription()}</p>
+                <span className="font-semibold text-lg">
+                  ${(product.price / 100).toFixed(2)}
+                </span>
+              </div>
               <button className="bg-teal-800 text-white rounded-full w-8 h-8 flex items-center justify-center">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
