@@ -7,7 +7,7 @@ export const Header: React.FC = () => {
       <h1 className="text-2xl font-bold text-teal-800">
         Find a coffee shop anywhere
       </h1>
-      <div className="w-10 h-10 rounded-full overflow-hidden">
+      <div className="w-10 h-10 rounded-full overflow-hidden cursor-pointer">
         <img src={ProfilePicture} alt="Profile" />
       </div>
     </header>
