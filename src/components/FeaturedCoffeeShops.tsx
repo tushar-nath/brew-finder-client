@@ -1,41 +1,17 @@
 import React from "react";
 import { CoffeeShop } from "../api";
-import img1 from "../assets/blake-verdoorn-gM-RfQsZK98-unsplash.jpg";
-import img2 from "../assets/kris-atomic-3b2tADGAWnU-unsplash.jpg";
-import img3 from "../assets/nafinia-putra-Kwdp-0pok-I-unsplash.jpg";
-import img4 from "../assets/patrick-tomasso-GXXYkSwndP4-unsplash.jpg";
-import img5 from "../assets/petr-sevcovic-qE1jxYXiwOA-unsplash.jpg";
-import img6 from "../assets/ruben-ramirez-xhKG01FN2uk-unsplash.jpg";
-import img7 from "../assets/sincerely-media-VNsdEl1gORk-unsplash.jpg";
-import img8 from "../assets/matiinu-ramadhan-i3vmGDN_Fzg-unsplash.jpg";
-import { useNavigate } from "react-router-dom";
-
-const images = [img1, img2, img3, img4, img5, img6, img7, img8];
-
-const shuffleArray = (array: string[]) => {
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
-  }
-  return array;
-};
-
-const shuffledImages = shuffleArray([...images]);
 
 interface FeaturedCoffeeShopsProps {
   coffeeShops: CoffeeShop[];
   onSelectShop: (shopId: string, selectedImage: string) => void;
+  images: string[];
 }
 
 export const FeaturedCoffeeShops: React.FC<FeaturedCoffeeShopsProps> = ({
   coffeeShops,
+  onSelectShop,
+  images,
 }) => {
-  const navigate = useNavigate();
-
-  const handleSelectShop = (shopId: string, selectedImage: string) => {
-    navigate(`/coffee-shop/${shopId}`, { state: { selectedImage } });
-  };
-
   return (
     <div>
       <h2 className="text-xl font-semibold mb-4">Featured coffee shops</h2>
@@ -45,14 +21,11 @@ export const FeaturedCoffeeShops: React.FC<FeaturedCoffeeShopsProps> = ({
             key={shop._id}
             className="relative rounded-lg overflow-hidden"
             onClick={() =>
-              handleSelectShop(
-                shop._id,
-                shuffledImages[index % shuffledImages.length]
-              )
+              onSelectShop(shop._id, images[index % images.length])
             }
           >
             <img
-              src={shuffledImages[index % shuffledImages.length]}
+              src={images[index % images.length]}
               alt={shop.name}
               className="w-full h-96 object-cover"
             />
