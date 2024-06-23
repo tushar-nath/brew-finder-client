@@ -1,30 +1,52 @@
-# React + TypeScript + Vite
+# Coffee Shop Finder
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Coffee Shop Finder is a React-based web application that helps users discover and explore coffee shops in their area. The app provides a user-friendly interface to browse featured coffee shops, view detailed information about each shop, and explore their menu items.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Browse featured coffee shops with images and ratings
 
-## Expanding the ESLint configuration
+- View detailed information about each coffee shop
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- Filter menu items by category (All, Drinks, Food)
 
-- Configure the top-level `parserOptions` property like this:
+- Responsive design for mobile and desktop use
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+- Search functionality (UI implemented, backend integration required)
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+## Technologies Used
+
+- React
+
+- React Router
+
+- TypeScript
+
+- Tailwind CSS
+
+- Vite (as the build tool)
+
+## Project Structure
+
+- `App.tsx`: Main application component with routing setup
+
+- `HomePage.tsx`: Landing page component displaying featured coffee shops
+
+- `CoffeeShopPage.tsx`: Detailed view of a single coffee shop with menu items
+
+- `FeaturedCoffeeShops.tsx`: Component for displaying featured coffee shops
+
+- `Header.tsx`: Header component with app title and user profile
+
+- `SearchBar.tsx`: Search input component
+
+- `BottomNavigation.tsx`: Navigation bar component
+
+- `api.ts`: API functions for fetching coffee shop data
+
+## Getting Started
+
+1. Clone the repository
+2. Install dependencies: `npm install`
+3. Create a `.env` file in the root directory and add the following: `VITE_NODE_BASE_URL=your_api_base_url_here`
+4. Start the development server: `npm run dev`
