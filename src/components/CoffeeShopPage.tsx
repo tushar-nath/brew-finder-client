@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { fetchCoffeeShop, CoffeeShop } from "../api";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -15,6 +15,7 @@ import drinkImg4 from "../assets/machiato.jpeg";
 import foodImg1 from "../assets/cookies.jpeg";
 import foodImg2 from "../assets/croissant.jpeg";
 import foodImg3 from "../assets/sandwich.jpeg";
+import { useCart } from "@/contexts/CartContext";
 
 const drinkImages = [drinkImg1, drinkImg2, drinkImg3, drinkImg4];
 const foodImages = [foodImg1, foodImg2, foodImg3];
@@ -28,16 +29,13 @@ const shuffleArray = (array: string[]) => {
   return shuffled;
 };
 
-const randomDescription = () => {
-  const descriptions = [
-    "A delicious blend of flavors",
-    "Perfect for a refreshing break",
-    "A classic favorite",
-    "Rich and flavorful",
-    "A delightful treat",
-  ];
-  return descriptions[Math.floor(Math.random() * descriptions.length)];
-};
+const descriptions = [
+  "A delicious blend of flavors",
+  "Perfect for a refreshing break",
+  "A classic favorite",
+  "Rich and flavorful",
+  "A delightful treat",
+];
 
 export const CoffeeShopPage: React.FC = () => {
   const { shopId } = useParams<{ shopId?: string }>();
@@ -52,6 +50,8 @@ export const CoffeeShopPage: React.FC = () => {
   >([]);
   const [filteredImages, setFilteredImages] = useState<string[]>([]);
   const [filter, setFilter] = useState<string>("All");
+
+  const { addToCart, getItemQuantity } = useCart();
 
   useEffect(() => {
     if (shopId) {
@@ -100,6 +100,16 @@ export const CoffeeShopPage: React.FC = () => {
     setFilteredProducts(productsToShow);
     setFilteredImages(shuffleArray(images));
   }, [filter, shop, selectedImage]);
+
+  const productDescriptions = useMemo(() => {
+    return (
+      shop?.products.reduce((acc, product) => {
+        acc[product._id] =
+          descriptions[Math.floor(Math.random() * descriptions.length)];
+        return acc;
+      }, {} as Record<string, string>) || {}
+    );
+  }, [shop]);
 
   if (isLoading)
     return (
@@ -188,26 +198,35 @@ export const CoffeeShopPage: React.FC = () => {
                 />
                 <div className="ml-4 flex-1">
                   <h3 className="font-semibold">{product.name}</h3>
-                  <p className="text-gray-600 text-sm">{randomDescription()}</p>
+                  <p className="text-gray-600 text-sm">
+                    {productDescriptions[product._id]}
+                  </p>
                   <span className="font-semibold text-lg">
                     ${(product.price / 100).toFixed(2)}
                   </span>
                 </div>
-                <button className="bg-teal-800 text-white rounded-full w-8 h-8 flex items-center justify-center">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-5 w-5"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-                    />
-                  </svg>
+                <button
+                  className="bg-teal-800 text-white rounded-full w-8 h-8 flex items-center justify-center"
+                  onClick={() => addToCart(product)}
+                >
+                  {getItemQuantity(product._id) > 0 ? (
+                    <span>{getItemQuantity(product._id)}</span>
+                  ) : (
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-5 w-5"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                      />
+                    </svg>
+                  )}
                 </button>
               </div>
             ))}

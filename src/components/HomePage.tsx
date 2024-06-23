@@ -6,6 +6,7 @@ import { FeaturedCoffeeShops } from "./FeaturedCoffeeShops";
 import { Header } from "./Header";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
+import { BeatLoader } from "react-spinners";
 
 // Import your images
 import img1 from "../assets/blake-verdoorn-gM-RfQsZK98-unsplash.jpg";
@@ -16,7 +17,7 @@ import img5 from "../assets/petr-sevcovic-qE1jxYXiwOA-unsplash.jpg";
 import img6 from "../assets/ruben-ramirez-xhKG01FN2uk-unsplash.jpg";
 import img7 from "../assets/sincerely-media-VNsdEl1gORk-unsplash.jpg";
 import img8 from "../assets/matiinu-ramadhan-i3vmGDN_Fzg-unsplash.jpg";
-import { BeatLoader } from "react-spinners";
+import { useCart } from "@/contexts/CartContext";
 
 const images = [img1, img2, img3, img4, img5, img6, img7, img8];
 
@@ -28,6 +29,7 @@ export const HomePage: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
+  const { cartItems } = useCart();
 
   useEffect(() => {
     fetchCoffeeShops()
@@ -56,6 +58,11 @@ export const HomePage: React.FC = () => {
     navigate(`/coffee-shop/${shopId}`, { state: { selectedImage } });
   };
 
+  const cartItemCount = cartItems.reduce(
+    (total, item) => total + item.quantity,
+    0
+  );
+
   if (isLoading)
     return (
       <div className="flex justify-center items-center min-h-screen">
@@ -83,7 +90,7 @@ export const HomePage: React.FC = () => {
         onSelectShop={handleSelectShop}
         images={images}
       />
-      <BottomNavigation />
+      <BottomNavigation cartItemCount={cartItemCount} />
     </motion.div>
   );
 };
