@@ -5,6 +5,7 @@ import BottomNavigation from "./BottomNavigation";
 import { FeaturedCoffeeShops } from "./FeaturedCoffeeShops";
 import { Header } from "./Header";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 
 // Import your images
 import img1 from "../assets/blake-verdoorn-gM-RfQsZK98-unsplash.jpg";
@@ -58,7 +59,12 @@ export const HomePage: React.FC = () => {
   if (error) return <div>{error}</div>;
 
   return (
-    <div className="bg-gray-100 min-h-screen">
+    <motion.div
+      className="bg-gray-100 min-h-screen"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+    >
       <Header />
       <SearchBar
         coffeeShops={coffeeShops}
@@ -72,6 +78,6 @@ export const HomePage: React.FC = () => {
         images={images}
       />
       <BottomNavigation />
-    </div>
+    </motion.div>
   );
 };

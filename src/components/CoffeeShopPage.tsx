@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { fetchCoffeeShop, CoffeeShop } from "../api";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
+import { motion } from "framer-motion";
 
 //drink images
 import drinkImg1 from "../assets/frappe.jpeg";
@@ -103,102 +104,109 @@ export const CoffeeShopPage: React.FC = () => {
   if (!shop) return <div>Shop not found</div>;
 
   return (
-    <div className="relative">
-      <img
-        src={selectedImage}
-        alt={shop.name}
-        className="w-full h-80 object-cover"
-      />
-      <button
-        onClick={() => navigate(-1)}
-        className="absolute top-4 left-4 bg-white rounded-full p-2"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-6 w-6"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
+    <motion.div
+      className="relative"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+    >
+      <div className="relative">
+        <img
+          src={selectedImage}
+          alt={shop.name}
+          className="w-full h-80 object-cover"
+        />
+        <button
+          onClick={() => navigate(-1)}
+          className="absolute top-4 left-4 bg-white rounded-full p-2"
         >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M15 19l-7-7 7-7"
-          />
-        </svg>
-      </button>
-      <div className="p-4">
-        <h2 className="text-2xl font-bold mb-2">{shop.name}</h2>
-        <div className="flex items-center mb-2">
-          <span className="text-yellow-500 mr-1">★</span>
-          <span className="font-semibold">{shop.rating}</span>
-        </div>
-        <p className="text-gray-600 mb-4">{shop.location.address}</p>
-        <div className="flex space-x-4 mb-6">
-          <button
-            onClick={() => setFilter("All")}
-            className={`text-gray-500 rounded-full py-2 px-4 flex items-center ${
-              filter === "All" ? "bg-teal-800 text-white" : ""
-            }`}
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
           >
-            All
-          </button>
-          <button
-            onClick={() => setFilter("Drink")}
-            className={`text-gray-500 rounded-full py-2 px-4 flex items-center ${
-              filter === "Drink" ? "bg-teal-800 text-white" : ""
-            }`}
-          >
-            Drinks
-          </button>
-          <button
-            onClick={() => setFilter("Food")}
-            className={`text-gray-500 rounded-full py-2 px-4 flex items-center ${
-              filter === "Food" ? "bg-teal-800 text-white" : ""
-            }`}
-          >
-            Food
-          </button>
-        </div>
-        <div className="grid grid-cols-3 gap-4">
-          {filteredProducts.map((product, index) => (
-            <div
-              key={product._id}
-              className="flex bg-gray-100 rounded-lg p-4 shadow-md"
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M15 19l-7-7 7-7"
+            />
+          </svg>
+        </button>
+        <div className="p-4">
+          <h2 className="text-2xl font-bold mb-2">{shop.name}</h2>
+          <div className="flex items-center mb-2">
+            <span className="text-yellow-500 mr-1">★</span>
+            <span className="font-semibold">{shop.rating}</span>
+          </div>
+          <p className="text-gray-600 mb-4">{shop.location.address}</p>
+          <div className="flex space-x-4 mb-6">
+            <button
+              onClick={() => setFilter("All")}
+              className={`text-gray-500 rounded-full py-2 px-4 flex items-center ${
+                filter === "All" ? "bg-teal-800 text-white" : ""
+              }`}
             >
-              <img
-                src={filteredImages[index]}
-                alt={product.name}
-                className="w-16 h-16 object-cover rounded-lg"
-              />
-              <div className="ml-4 flex-1">
-                <h3 className="font-semibold">{product.name}</h3>
-                <p className="text-gray-600 text-sm">{randomDescription()}</p>
-                <span className="font-semibold text-lg">
-                  ${(product.price / 100).toFixed(2)}
-                </span>
+              All
+            </button>
+            <button
+              onClick={() => setFilter("Drink")}
+              className={`text-gray-500 rounded-full py-2 px-4 flex items-center ${
+                filter === "Drink" ? "bg-teal-800 text-white" : ""
+              }`}
+            >
+              Drinks
+            </button>
+            <button
+              onClick={() => setFilter("Food")}
+              className={`text-gray-500 rounded-full py-2 px-4 flex items-center ${
+                filter === "Food" ? "bg-teal-800 text-white" : ""
+              }`}
+            >
+              Food
+            </button>
+          </div>
+          <div className="grid grid-cols-3 gap-4">
+            {filteredProducts.map((product, index) => (
+              <div
+                key={product._id}
+                className="flex bg-gray-100 rounded-lg p-4 shadow-md"
+              >
+                <img
+                  src={filteredImages[index]}
+                  alt={product.name}
+                  className="w-16 h-16 object-cover rounded-lg"
+                />
+                <div className="ml-4 flex-1">
+                  <h3 className="font-semibold">{product.name}</h3>
+                  <p className="text-gray-600 text-sm">{randomDescription()}</p>
+                  <span className="font-semibold text-lg">
+                    ${(product.price / 100).toFixed(2)}
+                  </span>
+                </div>
+                <button className="bg-teal-800 text-white rounded-full w-8 h-8 flex items-center justify-center">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-5 w-5"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                    />
+                  </svg>
+                </button>
               </div>
-              <button className="bg-teal-800 text-white rounded-full w-8 h-8 flex items-center justify-center">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-5 w-5"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-                  />
-                </svg>
-              </button>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
