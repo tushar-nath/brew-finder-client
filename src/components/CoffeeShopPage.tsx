@@ -96,9 +96,6 @@ export const CoffeeShopPage: React.FC<CoffeeShopPageProps> = ({
         </div>
         <p className="text-gray-600 mb-4">{shop.location.address}</p>
         <div className="flex space-x-4 mb-6">
-          <button className="bg-teal-800 text-white rounded-full py-2 px-4 flex items-center">
-            Coffee
-          </button>
           <button className="text-gray-500 rounded-full py-2 px-4 flex items-center">
             Drinks
           </button>
