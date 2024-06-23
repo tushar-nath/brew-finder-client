@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { fetchCoffeeShops, CoffeeShop } from "../api";
+import { fetchCoffeeShop, CoffeeShop } from "../api";
+import { useParams, useNavigate } from "react-router-dom";
 import img1 from "../assets/blake-verdoorn-gM-RfQsZK98-unsplash.jpg";
 import img2 from "../assets/kris-atomic-3b2tADGAWnU-unsplash.jpg";
 import img3 from "../assets/nafinia-putra-Kwdp-0pok-I-unsplash.jpg";
@@ -20,15 +21,9 @@ const shuffleArray = (array: string[]) => {
   return shuffled;
 };
 
-interface CoffeeShopPageProps {
-  shopId: string;
-  onBack: () => void;
-}
-
-export const CoffeeShopPage: React.FC<CoffeeShopPageProps> = ({
-  shopId,
-  onBack,
-}) => {
+export const CoffeeShopPage: React.FC = () => {
+  const { shopId } = useParams<{ shopId?: string }>();
+  const navigate = useNavigate();
   const [shop, setShop] = useState<CoffeeShop | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -39,27 +34,27 @@ export const CoffeeShopPage: React.FC<CoffeeShopPageProps> = ({
   }, []);
 
   useEffect(() => {
-    fetchCoffeeShops()
-      .then((shops) => {
-        const selectedShop = shops.find((s) => s._id === shopId);
-        if (selectedShop) {
-          setShop(selectedShop);
-        } else {
-          setError("Shop not found");
-        }
-        setIsLoading(false);
-      })
-      .catch(() => {
-        setError("Failed to load shop details");
-        setIsLoading(false);
-      });
+    if (shopId) {
+      fetchCoffeeShop(shopId)
+        .then((shop) => {
+          setShop(shop);
+          setIsLoading(false);
+        })
+        .catch(() => {
+          setError("Failed to load shop details");
+          setIsLoading(false);
+        });
+    } else {
+      setError("Shop ID is undefined");
+      setIsLoading(false);
+    }
   }, [shopId]);
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>{error}</div>;
   if (!shop) return <div>Shop not found</div>;
 
-  const imageIndex = shopId.charCodeAt(0) % shuffledImages.length;
+  const imageIndex = shopId!.charCodeAt(0) % shuffledImages.length;
   const shopImage = shuffledImages[imageIndex];
 
   return (
@@ -70,7 +65,7 @@ export const CoffeeShopPage: React.FC<CoffeeShopPageProps> = ({
         className="w-full h-80 object-cover"
       />
       <button
-        onClick={onBack}
+        onClick={() => navigate(-1)}
         className="absolute top-4 left-4 bg-white rounded-full p-2"
       >
         <svg

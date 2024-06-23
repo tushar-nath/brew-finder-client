@@ -4,15 +4,13 @@ import SearchBar from "./SearchBar";
 import BottomNavigation from "./BottomNavigation";
 import { FeaturedCoffeeShops } from "./FeaturedCoffeeShops";
 import { Header } from "./Header";
+import { useNavigate } from "react-router-dom";
 
-interface HomePageProps {
-  onSelectShop: (shopId: string) => void;
-}
-
-export const HomePage: React.FC<HomePageProps> = ({ onSelectShop }) => {
+export const HomePage: React.FC = () => {
   const [coffeeShops, setCoffeeShops] = useState<CoffeeShop[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchCoffeeShops()
@@ -30,12 +28,12 @@ export const HomePage: React.FC<HomePageProps> = ({ onSelectShop }) => {
   if (error) return <div>{error}</div>;
 
   return (
-    <div className="p-4 pb-16">
+    <div className="bg-gray-100 min-h-screen">
       <Header />
       <SearchBar />
       <FeaturedCoffeeShops
         coffeeShops={coffeeShops}
-        onSelectShop={onSelectShop}
+        onSelectShop={(id) => navigate(`/coffee-shop/${id}`)}
       />
       <BottomNavigation />
     </div>
