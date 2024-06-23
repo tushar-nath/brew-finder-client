@@ -33,7 +33,7 @@ export const FeaturedCoffeeShops: React.FC<FeaturedCoffeeShopsProps> = ({
   return (
     <div>
       <h2 className="text-xl font-semibold mb-4">Featured coffee shops</h2>
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-2 gap-4 cursor-pointer">
         {coffeeShops.map((shop, index) => (
           <div
             key={shop._id}

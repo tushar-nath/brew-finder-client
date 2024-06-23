@@ -6,7 +6,7 @@ const SearchBar: React.FC = () => {
       <input
         type="text"
         placeholder="Search"
-        className="flex-grow bg-gray-100 rounded-l-full py-2 px-4 focus:outline-none"
+        className="flex-grow bg-gray-200 rounded-l-full py-2 px-4 focus:outline-none"
       />
       <button className="bg-teal-800 text-white rounded-r-full p-2 w-12 flex items-center justify-center">
         <svg

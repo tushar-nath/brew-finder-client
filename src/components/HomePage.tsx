@@ -3,6 +3,7 @@ import { fetchCoffeeShops, CoffeeShop } from "../api";
 import SearchBar from "./SearchBar";
 import BottomNavigation from "./BottomNavigation";
 import { FeaturedCoffeeShops } from "./FeaturedCoffeeShops";
+import Header from "./Header";
 
 interface HomePageProps {
   onSelectShop: (shopId: string) => void;
@@ -30,18 +31,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onSelectShop }) => {
 
   return (
     <div className="p-4 pb-16">
-      <header className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold text-teal-800">
-          Find a coffee shop anywhere
-        </h1>
-        <div className="w-10 h-10 rounded-full overflow-hidden">
-          <img
-            src="/path-to-user-image.jpg"
-            alt="User"
-            className="w-full h-full object-cover"
-          />
-        </div>
-      </header>
+      <Header />
       <SearchBar />
       <FeaturedCoffeeShops
         coffeeShops={coffeeShops}
