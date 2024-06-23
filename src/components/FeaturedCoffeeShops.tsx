@@ -8,6 +8,7 @@ import img5 from "../assets/petr-sevcovic-qE1jxYXiwOA-unsplash.jpg";
 import img6 from "../assets/ruben-ramirez-xhKG01FN2uk-unsplash.jpg";
 import img7 from "../assets/sincerely-media-VNsdEl1gORk-unsplash.jpg";
 import img8 from "../assets/matiinu-ramadhan-i3vmGDN_Fzg-unsplash.jpg";
+import { useNavigate } from "react-router-dom";
 
 const images = [img1, img2, img3, img4, img5, img6, img7, img8];
 
@@ -23,13 +24,18 @@ const shuffledImages = shuffleArray([...images]);
 
 interface FeaturedCoffeeShopsProps {
   coffeeShops: CoffeeShop[];
-  onSelectShop: (shopId: string) => void;
+  onSelectShop: (shopId: string, selectedImage: string) => void;
 }
 
 export const FeaturedCoffeeShops: React.FC<FeaturedCoffeeShopsProps> = ({
   coffeeShops,
-  onSelectShop,
 }) => {
+  const navigate = useNavigate();
+
+  const handleSelectShop = (shopId: string, selectedImage: string) => {
+    navigate(`/coffee-shop/${shopId}`, { state: { selectedImage } });
+  };
+
   return (
     <div>
       <h2 className="text-xl font-semibold mb-4">Featured coffee shops</h2>
@@ -38,7 +44,12 @@ export const FeaturedCoffeeShops: React.FC<FeaturedCoffeeShopsProps> = ({
           <div
             key={shop._id}
             className="relative rounded-lg overflow-hidden"
-            onClick={() => onSelectShop(shop._id)}
+            onClick={() =>
+              handleSelectShop(
+                shop._id,
+                shuffledImages[index % shuffledImages.length]
+              )
+            }
           >
             <img
               src={shuffledImages[index % shuffledImages.length]}
