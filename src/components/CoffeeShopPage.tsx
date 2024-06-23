@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { fetchCoffeeShop, CoffeeShop } from "../api";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
+import BeatLoader from "react-spinners/BeatLoader";
 
 //drink images
 import drinkImg1 from "../assets/frappe.jpeg";
@@ -99,7 +100,12 @@ export const CoffeeShopPage: React.FC = () => {
     setFilteredImages(shuffleArray(images));
   }, [filter, shop, selectedImage]);
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading)
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <BeatLoader color={"#00695C"} loading={isLoading} />
+      </div>
+    );
   if (error) return <div>{error}</div>;
   if (!shop) return <div>Shop not found</div>;
 

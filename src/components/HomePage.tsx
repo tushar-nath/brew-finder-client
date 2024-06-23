@@ -16,6 +16,7 @@ import img5 from "../assets/petr-sevcovic-qE1jxYXiwOA-unsplash.jpg";
 import img6 from "../assets/ruben-ramirez-xhKG01FN2uk-unsplash.jpg";
 import img7 from "../assets/sincerely-media-VNsdEl1gORk-unsplash.jpg";
 import img8 from "../assets/matiinu-ramadhan-i3vmGDN_Fzg-unsplash.jpg";
+import { BeatLoader } from "react-spinners";
 
 const images = [img1, img2, img3, img4, img5, img6, img7, img8];
 
@@ -55,7 +56,12 @@ export const HomePage: React.FC = () => {
     navigate(`/coffee-shop/${shopId}`, { state: { selectedImage } });
   };
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading)
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <BeatLoader color={"#00695C"} loading={isLoading} />
+      </div>
+    );
   if (error) return <div>{error}</div>;
 
   return (
